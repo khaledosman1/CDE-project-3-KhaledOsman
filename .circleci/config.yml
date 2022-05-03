@@ -210,7 +210,7 @@ jobs:
             echo CIRCLE_WORKFLOW_ID "${CIRCLE_WORKFLOW_ID:0:7}"
 
             # storing old workflow id value in KVDB
-            curl https://kvdb.io/7ba7qPivESWJNPB5WWBL8z/OldWorkflowID_${CIRCLE_WORKFLOW_ID:0:7}  -d ${OldWorkflowID}
+            curl https://kvdb.io/7ba7qPivESWJNPB5WWBL8z/OldWorkflowID_${CIRCLE_WORKFLOW_ID:0:7}  -d '${OldWorkflowID}'
             echo KVDB Old Workflow is: $(curl --insecure  https://kvdb.io/7ba7qPivESWJNPB5WWBL8z/OldWorkflowID_${CIRCLE_WORKFLOW_ID:0:7})
 
             # Fetch the stack names
@@ -219,13 +219,13 @@ jobs:
             echo stacks: "${STACKS[@]}"
 
             # storing Stacks value in KVDB
-           # if [[ "${STACKS}"  != "" ]]
-           # then
-           #   curl https://kvdb.io/7ba7qPivESWJNPB5WWBL8z/Stacks_${CIRCLE_WORKFLOW_ID:0:7}  -d ${STACKS}
-           # else
-           #   curl -k https://kvdb.io/7ba7qPivESWJNPB5WWBL8z/Stacks_${CIRCLE_WORKFLOW_ID:0:7}  -d '0'
-           # fi
-           # echo KVDB Stacks are: $(curl --insecure  https://kvdb.io/7ba7qPivESWJNPB5WWBL8z/Stacks_${CIRCLE_WORKFLOW_ID:0:7})
+            if [[ "${STACKS}"  != "" ]]
+            then
+              curl https://kvdb.io/7ba7qPivESWJNPB5WWBL8z/Stacks_${CIRCLE_WORKFLOW_ID:0:7}  -d '${STACKS}'
+            else
+              curl -k https://kvdb.io/7ba7qPivESWJNPB5WWBL8z/Stacks_${CIRCLE_WORKFLOW_ID:0:7}  -d '0'
+            fi
+            echo KVDB Stacks are: $(curl --insecure  https://kvdb.io/7ba7qPivESWJNPB5WWBL8z/Stacks_${CIRCLE_WORKFLOW_ID:0:7})
             
       - run:
           name: Deploy backend infrastructure
