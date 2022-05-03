@@ -265,7 +265,6 @@ jobs:
           id: ${CIRCLE_WORKFLOW_ID:0:7}
           when: on_fail
 
-# get
   configure-infrastructure:
     #executor: python
     docker:
@@ -389,9 +388,11 @@ jobs:
           fingerprints: ["a6:bb:03:fc:54:95:69:ac:f8:50:ec:42:9a:c3:08:41"]
       - attach_workspace:
           at: .
-      
+      #- restore_cache:
+      #    keys: [backend-deps]
       - run:
           name: Install dependencies
+          #working_directory: /tmp
           command: |
             apk add --update  ansible gzip tar npm curl rsync openssh nodejs
             pip install awscli
@@ -422,10 +423,11 @@ jobs:
             cd .circleci/ansible/roles/deploy/files
             ls
             cd ~
-
+#cp backend/artifact.tar.gz .circleci/ansible/roles/deploy/files
+#tar -czf https://github.com/prometheus/node_exporter/releases/download/v0.17.0/node_exporter-0.17.0.linux-amd64.tar.gz dist/* package*
       - run:
           name: Deploy backend
-          
+          #working_directory: ./.circleci/ansible
           command: |           
             cd .circleci/ansible
             echo "Contents of the inventory.txt file is --------"
@@ -546,6 +548,7 @@ jobs:
             fi
           environment:
             TERM: xterm-256color
+# aws s3 rm "s3://udapeople-kk1j287dhjppmz43780" --recursive --debug
 
 workflows:
   default:
