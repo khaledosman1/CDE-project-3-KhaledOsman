@@ -1,0 +1,15 @@
+Public Url to GitHub repository (not private) [URL01]
+  https://github.com/khaledosman1/CDE-project-3-KhaledOsman
+
+Public URL for your S3 Bucket (aka, your green candidate front-end) [URL02]
+  http://udapeople-d5e6f40.s3-website-us-east-1.amazonaws.com/
+
+Public URL for your CloudFront distribution (aka, your blue production front-end) [URL03]
+  http://d9w9535o411ct.cloudfront.net
+
+Public URLs to deployed application back-end in EC2 [URL04]
+  http://ec2-18-208-158-42.compute-1.amazonaws.com:3030/api/status
+  http://ec2-54-160-137-192.compute-1.amazonaws.com:3030/api/status                  Old IP before stop machine to try Alert manager because it normal Temporary public IP not Elsatic IP
+
+Public URL to your Prometheus Server [URL05]
+  http://ec2-54-92-214-226.compute-1.amazonaws.com:9090/
