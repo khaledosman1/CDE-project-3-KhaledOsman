@@ -517,8 +517,6 @@ jobs:
           id: ${CIRCLE_WORKFLOW_ID:0:7}
           when: on_fail
 
-           # export OldWorkflowID=$(curl --insecure https://kvdb.io/7ba7qPivESWJNPB5WWBL8z/OldWorkflowID_${CIRCLE_WORKFLOW_ID:0:7})
-
   cleanup:
     executor: aws
     steps:
