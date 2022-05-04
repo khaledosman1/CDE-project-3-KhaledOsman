@@ -296,16 +296,10 @@ jobs:
           name: Install dependencies
           command: |
             apk add --update ansible
-            sudo apt-get install curl
-            sudo apt-get install jq
-
             ansible --version
             cat .circleci/ansible/inventory.txt
       
-      - slack/notify:
-          channel: devops
-          event: pass
-          template: success_tagged_deploy_1
+      
 
       - run:
           name: Configure server
@@ -372,6 +366,7 @@ jobs:
             sudo apt-get update && sudo apt-get install -yy less
             sudo apt-get install curl
             sudo apt-get install tar 
+            sudo apt-get install jq
             curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
             unzip awscliv2.zip
             sudo ./aws/install
@@ -382,6 +377,10 @@ jobs:
             export API_URL=$(curl --insecure https://kvdb.io/7ba7qPivESWJNPB5WWBL8z/migration_$\{CIRCLE_WORKFLOW_ID:0:7})
             echo "${API_URL}"
             npm run build
+      - slack/notify:
+          channel: devops
+          event: pass
+          template: success_tagged_deploy_1
       - run:
           name: Deploy frontend objects to S3
           working_directory: ./frontend
@@ -606,8 +605,6 @@ workflows:
             - test-frontend
             - scan-backend
             - scan-frontend
-          context:
-            - udacity
 
       - run-migrations:
           requires:
@@ -626,6 +623,8 @@ workflows:
       - deploy-frontend:
           requires:
             - run-migrations
+          context:
+            - udacity
       - smoke-test:
           requires:
             - deploy-backend
