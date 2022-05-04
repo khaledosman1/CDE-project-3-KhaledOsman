@@ -1,4 +1,13 @@
 version: 2.1
+orbs: 
+  slack: circleci/slack@4.9.4
+
+#workflows:
+#  send-notification:
+#    jobs:
+#      - notify:
+#          context: udacity
+
 
 executors:
   node:
@@ -289,6 +298,11 @@ jobs:
             apk add --update ansible
             ansible --version
             cat .circleci/ansible/inventory.txt
+      - slack/notify:
+          channel: devops
+          event: pass
+          template: success_tagged_deploy_1
+
       - run:
           name: Configure server
           working_directory: ./.circleci/ansible
@@ -588,6 +602,11 @@ workflows:
             - test-frontend
             - scan-backend
             - scan-frontend
+
+      - deploy:
+          context:
+            - udacity
+            
       - run-migrations:
           requires:
             - test-backend
