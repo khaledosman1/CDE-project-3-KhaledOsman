@@ -28,7 +28,7 @@ describe('Employee Remover', () => {
         params.isActive,
       );
 
-      // Act
+      // Act1
       await handler.handle(activateEmployeeCommand);
 
       // Assert
