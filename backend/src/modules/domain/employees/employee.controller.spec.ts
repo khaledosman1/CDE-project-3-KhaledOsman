@@ -64,7 +64,7 @@ describe('Employee Controller', () => {
       // Arrange
       const request = {
         employeeId: 100,
-        xfirstName: 'Jimmy',
+        firstName: 'Jimmy',
         lastName: 'Ramos',
         middleName: 'Josue',
         secondLastName: 'Banegas',
