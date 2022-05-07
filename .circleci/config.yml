@@ -246,16 +246,15 @@ jobs:
               --tags project=udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}
       - run:
           name: Get backend url
+          working_directory: ./frontend
           command: |
             export BACKEND_IP=$(aws ec2 describe-instances \
               --query 'Reservations[*].Instances[*].PublicIpAddress' \
               --filters "Name=tag:project,Values=udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}" --output text)
-            export API_URL="http://${BACKEND_IP}:3030" >> ../../frontend/.env
-            echo "${API_URL}"
-            cat ../../frontend/.env
-          #  export API_URL="http://${BACKEND_IP}:3030" >> frontend/.env
-          #  cat frontend/.env
-          #  
+            export API_URL="http://${BACKEND_IP}:3030"
+            echo "API_URL = ${API_URL}"
+            echo API_URL="http://${BACKEND_IP}:3030" >> .env
+            cat .env
       - run:
           name: Deploy frontend infrastructure
           working_directory: ./.circleci/files
